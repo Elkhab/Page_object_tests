@@ -1,15 +1,15 @@
 from selenium.common.exceptions import NoSuchElementException
-from selenium.common.exceptions import NoAlertPresentException # в начале файла
+from selenium.common.exceptions import NoAlertPresentException
 import math
 from pages.locators import BasePageLocators
-from pages import ProductPageLocators
+from pages import locators
 
 
 
 
 
 class BasePage():
-    def __init__(self, browser, url, timeout=10):
+    def __init__(self, browser, url, timeout=15):
         self.browser = browser
         self.url = url
         self.browser.implicitly_wait(timeout)
@@ -27,7 +27,7 @@ class BasePage():
             return True
 
     def go_to_login_page(self):
-        link = self.browser.find_element(*BasePageLocators.LOGIN_LINK_INVALID)
+        link = self.browser.find_element(*BasePageLocators.LOGIN_LINK)
         link.click()
 
     def should_be_login_link(self):
@@ -43,7 +43,7 @@ class BasePage():
 
     def add_product_to_basket(self):
         basket = self.browser.find_element(
-                    *ProductPageLocators.MainPageLocators.BASKET)
+                    *locators.MainPageLocators.BASKET)
         basket.click()
 
 
@@ -69,12 +69,11 @@ class BasePage():
 
     def should_be_book_added(self):
                 message_basket_total = self.browser.find_element(
-                    *ProductPageLocators.MainPageLocators.CART_PRICE)
+                    *locators.MainPageLocators.CART_PRICE)
                 product_price = self.browser.find_element(
-                    *ProductPageLocators.MainPageLocators.PRODUCT_PRICE)
+                    *locators.MainPageLocators.PRODUCT_PRICE)
                 print(product_price.text)
                 print(message_basket_total.text)
 
 
 
-            #assert product_price.text == message_basket_total.text, "не равно"
